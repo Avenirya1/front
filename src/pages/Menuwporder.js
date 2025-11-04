@@ -340,8 +340,12 @@ if (!adminPhone) {
           )}
         </div>
         <div>
-        
-             <CustomFieldsDisplay restaurantId={data._id} />
+
+             {id ? (
+                  <CustomFieldsDisplay restaurantId={id} />
+                ) : (
+                  <p className="text-gray-500 text-center mt-6">Fetching restaurant data...</p>
+                )}
         </div>
         
         <div className="flex flex-wrap justify-center">
