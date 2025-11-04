@@ -424,7 +424,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
           {/* Left: Text */}
           <div className="md:w-1/2 text-center md:text-left">
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900">
-             All-in-One QR Code for Your Restaurant.
+             ALL-in-One QR Code for Your Restaurant.
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-700">
              Instantly create a digital menu, take orders via WhatsApp, grow your social media, and boost your Google ratings—all from a single scan.
