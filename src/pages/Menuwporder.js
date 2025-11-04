@@ -7,7 +7,9 @@ import { Helmet } from "react-helmet";
 import MenuCard from "../components/MenuCardWp";
 
 function RestaurantMenuPagewp() {
-  const { id } = useParams();
+  const params = useParams();
+  const rawParam = params.slug || params.id || params.param || null;
+  const [id, setId] = useState(null);
   const [searchParams] = useSearchParams();
   const tableFromURL = searchParams.get("table");
   const [showModal, setShowModal] = useState(false);
@@ -55,13 +57,33 @@ const currencySymbol = selectedCurrency ? selectedCurrency.symbol : "₹";
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+useEffect(() => {
+  const fetchRestaurantId = async () => {
+    if (!rawParam) return;
+    
+    try {
+      setLoading(true);
+      // First get restaurant ID from slug
+      const response = await fetch(`http://localhost:5001/api/admin/restaurants/slug/${rawParam}`);
+      const data = await response.json();
+      
+      if (!response.ok) throw new Error(data.message);
+      setId(data.id); // Set the ID for subsequent calls
+      console.log("Fetched restaurant ID:", data.id);
+      
+    } catch (error) {
+      console.error("Error fetching restaurant ID:", error);
+    }
+  };
 
+  fetchRestaurantId();
+}, [rawParam]);
   useEffect(() => {
     const fetchOffers = async () => {
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
-          `/api/admin/${id}/offers`,
+          `http://localhost:5001/api/admin/${id}/offers`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();
@@ -83,10 +105,10 @@ const currencySymbol = selectedCurrency ? selectedCurrency.symbol : "₹";
         const token = localStorage.getItem("token");
 
         const [menuRes, detailsRes] = await Promise.all([
-          fetch(`/api/admin/${id}/menu`, {
+          fetch(`http://localhost:5001/api/admin/${id}/menu`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          fetch(`/api/admin/${id}/details`, {
+          fetch(`http://localhost:5001/api/admin/${id}/details`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -95,7 +117,6 @@ const currencySymbol = selectedCurrency ? selectedCurrency.symbol : "₹";
         const details = await detailsRes.json();
 
         if (Array.isArray(menu)) setMenuData(menu);
-        else toast.error("Failed to load menu data.");
 
         setRestaurantDetails(details);
       } catch {

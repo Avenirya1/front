@@ -42,7 +42,7 @@ const AgencyDashboard = () => {
   { code: "CNY", name: "Chinese Yuan", symbol: "¥" },
 ];
 
-  const API = "/api/admin";
+  const API = "http://localhost:5001/api/admin";
   const WP_USERNAME = "yashkolnure58@gmail.com";
   const WP_APP_PASSWORD = "05mq iTLF UvJU dyaz 7KxQ 8pyc";
   const WP_SITE_URL = "https://website.avenirya.com";
@@ -363,7 +363,7 @@ const AgencyDashboard = () => {
                           </button>
 
                           <a
-                            href={`/menu/${rest._id}`}
+                            href={`/s/${rest.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-green-600 hover:text-green-800"

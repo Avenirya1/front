@@ -27,10 +27,10 @@ const SuperAdminDashboard = () => {
   const limits = {
     1: 10,   // Level 1 agency → max 10 restaurants
     2: 25,   // Level 2 agency → max 25 restaurants
-    3: 500,  // Level 3 agency → max 50 restaurants
+    3: 2000,  // Level 3 agency → max 50 restaurants
   };
 
-  const API = "/api/admin";
+  const API = "http://localhost:5001/api/admin";
   const WP_USERNAME = "yashkolnure58@gmail.com";
   const WP_APP_PASSWORD = "05mq iTLF UvJU dyaz 7KxQ 8pyc";
   const WP_SITE_URL = "https://website.avenirya.com";
@@ -115,7 +115,7 @@ const uploadHomeImageToWordPress = async (file) => {
         logo: "",
         contact: "",
         password: "",
-        currency: "", // 🆕 Default to INR
+        currency: "INR", // 🆕 Default to INR
         subadmin_id: agencyId,
         membership_level: "",
       });
@@ -388,7 +388,7 @@ const uploadHomeImageToWordPress = async (file) => {
                           </button>
 
                           <a
-                            href={`/menu/${rest._id}`}
+                            href={`/s/${rest.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-green-600 hover:text-green-800"
