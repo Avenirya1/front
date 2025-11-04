@@ -427,7 +427,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
              ALL-in-One QR Code for Your Restaurant.
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-700">
-             Instantly create a digital menu, take orders via WhatsApp, grow your social media, and boost your Google ratings—all from a single scan.
+             Create a digital menu, take orders via WhatsApp, grow your social media, and boost your Google ratings—all from a single scan.
             </p>
             <a href="/membership">
               <button className="px-10 py-4 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 font-bold shadow-lg hover:scale-105 transition-transform">
