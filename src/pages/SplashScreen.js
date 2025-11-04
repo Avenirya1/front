@@ -19,7 +19,7 @@ const SplashScreen = () => {
       try {
         setLoading(true);
         // First get restaurant ID from slug
-        const response = await fetch(`http://localhost:5001/api/admin/restaurants/slug/${rawParam}`);
+        const response = await fetch(`/api/admin/restaurants/slug/${rawParam}`);
         const data = await response.json();
         
         if (!response.ok) throw new Error(data.message);
@@ -39,7 +39,7 @@ const SplashScreen = () => {
 
     const fetchRestaurant = async () => {
       try {
-        const res = await fetch(`http://localhost:5001/api/admin/${id}/details`);
+        const res = await fetch(`/api/admin/${id}/details`);
         console.log("API response:", res.status);
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -70,7 +70,7 @@ const SplashScreen = () => {
       <div className="flex flex-col items-center justify-center h-screen bg-black text-white">
         <p>Loading...</p>
         <p className="text-gray-400 text-sm mt-2">
-          Fetching http://localhost:5001/api/admin/{id}/details
+          Fetching /api/admin/{id}/details
         </p>
       </div>
     );

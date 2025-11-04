@@ -64,7 +64,7 @@ useEffect(() => {
     try {
       setLoading(true);
       // First get restaurant ID from slug
-      const response = await fetch(`http://localhost:5001/api/admin/restaurants/slug/${rawParam}`);
+      const response = await fetch(`/api/admin/restaurants/slug/${rawParam}`);
       const data = await response.json();
       
       if (!response.ok) throw new Error(data.message);
@@ -83,7 +83,7 @@ useEffect(() => {
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
-          `http://localhost:5001/api/admin/${id}/offers`,
+          `/api/admin/${id}/offers`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();
@@ -105,10 +105,10 @@ useEffect(() => {
         const token = localStorage.getItem("token");
 
         const [menuRes, detailsRes] = await Promise.all([
-          fetch(`http://localhost:5001/api/admin/${id}/menu`, {
+          fetch(`/api/admin/${id}/menu`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          fetch(`http://localhost:5001/api/admin/${id}/details`, {
+          fetch(`/api/admin/${id}/details`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
