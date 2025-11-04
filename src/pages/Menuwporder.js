@@ -341,7 +341,7 @@ if (!adminPhone) {
         </div>
         <div>
         
-             <CustomFieldsDisplay restaurantId={_id} />
+             <CustomFieldsDisplay restaurantId={data._id} />
         </div>
         
         <div className="flex flex-wrap justify-center">
