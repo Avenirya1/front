@@ -205,10 +205,10 @@ const MembershipPage = () => {
       {/* Personal Plans */}
       <section className="relative py-16 bg-white">
                 <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions.</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions. Customers scan, order, and enjoy a contactless dining experience."
         />
 
         <link
@@ -240,8 +240,7 @@ const MembershipPage = () => {
       </section>
 
       {/* Business & Agency Plans */}
-      <section id="agency" className="relative py-16 ">
-        {/* Background blobs for second section */}
+      {/* <section id="agency" className="relative py-16 ">
         <div className="absolute -top-20 right-0 w-72 h-72 bg-gradient-to-r from-teal-400 to-blue-600 rounded-full blur-3xl opacity-30"></div>
         <div className="absolute bottom-20 left-0 w-80 h-80 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full blur-3xl opacity-30"></div>
 
@@ -254,10 +253,9 @@ const MembershipPage = () => {
           </p>
           {renderPlans(businessPlans, "business")}
         </div>
-      </section>
-      {/* 🔹 WhatsApp Help Floating Button */}
+      </section> */}
       <a
-        href="https://wa.me/919270361329?text=Hi! is there anyone to chat?"
+        href="https://wa.me/919494678811?text=Hi! is there anyone to chat?"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"

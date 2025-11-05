@@ -12,7 +12,7 @@ function Loginfree() {
     setError("");
     try {
       const res = await fetch(
-        "/api/admin/login",
+        "https://scrollmenus.com/api/admin/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -38,22 +38,18 @@ function Loginfree() {
   return (
   <div className="relative bg-white  py-16">
             <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Just a Scan Away | Digital QR Menu & Ordering</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
         />
 
-        <link
-          rel="icon"
-          href="https://petoba.avenirya.com/wp-content/uploads/2025/09/download-1.png"
-          type="image/png"
-        />
+
         <meta
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"
         />
-        <meta property="og:title" content="Petoba - Digital QR Menu" />
+        <meta property="og:title" content="Scroll Menus - Digital QR Menu" />
         <meta property="og:description" content="Turn your restaurant’s menu into a digital QR code menu." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yash.avenirya.com" />
@@ -131,7 +127,7 @@ function Loginfree() {
 
     {/* WhatsApp Help Floating Button */}
     <a
-      href="https://wa.me/917499835687?text=Hello%2C%20I%20need%20help%20with%20Petoba%20menu%20login."
+      href="https://wa.me/919494678811?text=Hello%2C%20I%20need%20help%20with%20menu%20login."
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2"

@@ -216,22 +216,17 @@ if (!adminPhone) {
   return (
     <>
             <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions.</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions. Customers scan, order, and enjoy a contactless dining experience."
         />
 
-        <link
-          rel="icon"
-          href="https://petoba.avenirya.com/wp-content/uploads/2025/09/download-1.png"
-          type="image/png"
-        />
         <meta
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"
         />
-        <meta property="og:title" content="Petoba - Digital QR Menu" />
+        <meta property="og:title" content="Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions. - Digital QR Menu" />
         <meta property="og:description" content="Turn your restaurant’s menu into a digital QR code menu." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yash.avenirya.com" />
@@ -350,7 +345,7 @@ if (!adminPhone) {
         
         <div className="flex flex-wrap justify-center">
           <p className="text-gray-500 text-center mt-4">
-              Made with ❤️ by <a href="https://yash.avenirya.com" className="text-orange-500" target="_blank" rel="noopener noreferrer">Petoba</a> 
+              Made with ❤️ by <a href="https://scrollmenus.com/" className="text-orange-500" target="_blank" rel="noopener noreferrer">Scroll Menus </a> 
             </p>
             </div>
           </div>

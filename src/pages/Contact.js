@@ -11,38 +11,38 @@ const ContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatus("");
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const res = await fetch("https://petoba.avenirya.com/wp-json/contact-form/v1/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
+  // Create the message text
+  const message = `Hello! 👋
+Name: ${formData.name}
+Email: ${formData.email}
+Message: ${formData.message}`;
 
-      if (data.success) {
-        setStatus("✅ Thanks for your submission! Please check your email.");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("❌ Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      setStatus("❌ Error connecting to the server.");
-    }
-    setLoading(false);
-  };
+  // Encode message for URL
+  const encodedMessage = encodeURIComponent(message);
+
+  // WhatsApp link
+  const whatsappUrl = `https://wa.me/919494678811?text=${encodedMessage}`;
+
+  // Open WhatsApp in new tab
+  window.open(whatsappUrl, "_blank");
+
+  setLoading(false);
+  setStatus("✅ Opening WhatsApp...");
+  setFormData({ name: "", email: "", message: "" });
+};
+
 
   return (
     <div className="relative min-h-screen py-16 px-6 lg:px-20 ">
               <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Delivered | Digital QR Menu & Ordering</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
         />
 
         <link
@@ -54,7 +54,7 @@ const ContactPage = () => {
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"
         />
-        <meta property="og:title" content="Petoba - Contact Us" />
+        <meta property="og:title" content="Scroll Menus - Contact Us" />
         <meta property="og:description" content="Turn your restaurant’s menu into a digital QR code menu." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yash.avenirya.com" />
@@ -70,7 +70,7 @@ const ContactPage = () => {
           Contact <span className="text-blue-600">Us</span>
         </h1>
         <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-          Got questions about Petoba KOT & Billing? We’re here to help.  
+          Got questions about Scroll Menus - Your Restaurant’s Menu, We’re here to help.  
           Fill out the form below or reach out directly using the provided contact details.
         </p>
 
@@ -131,7 +131,9 @@ const ContactPage = () => {
                   <FaMapMarkerAlt size={20} />
                 </div>
                 <p className="text-gray-700">
-                109, Kohinoor Emerald, Sus - Pashan Road,<br />Pune, Maharashtra - 411021, India
+                RR Digital Solutions,
+Hyderabad,<br/>
+Telangana, India
                 </p>
             </div>
 
@@ -140,7 +142,7 @@ const ContactPage = () => {
                 <div className="p-4 bg-green-100 rounded-full text-green-600">
                   <FaPhoneAlt size={20} />
                 </div>
-                <p className="text-gray-700">+91 9270361329</p>
+                <p className="text-gray-700">+91-9494678811</p>
             </div>
 
             {/* WhatsApp */}
@@ -149,7 +151,7 @@ const ContactPage = () => {
                   <FaWhatsapp size={20} />
                 </div>
                 <a
-                  href="https://wa.me/919270361329"
+                  href="https://wa.me/919494678811"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-700 hover:text-green-600 transition-colors"
@@ -164,8 +166,7 @@ const ContactPage = () => {
                   <FaEnvelope size={20} />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-gray-700">admin@avenirya.com</p>
-                  <p className="text-gray-700">yashkolnure58@gmail.com</p>
+                  <p className="text-gray-700">admin@scrollsmenus.com</p>
                 </div>
             </div>
           </div>

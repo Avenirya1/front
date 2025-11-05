@@ -80,51 +80,53 @@ const Header = () => {
           <div className="flex items-center gap-2">
             <a href="/">
             <img
-              src="https://petoba.avenirya.com/wp-content/uploads/2022/07/Untitled-design-6.png"
+              src="https://i.ibb.co/ZpM82T5p/Scroll-Menus-Logo-v1.png"
               alt="Logo"
               className="h-20 w-auto"
             /></a>
           </div>
 
           {/* Desktop Nav links */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-14">
             <a href="/" className="hover:text-blue-600 font-medium">
               Home
             </a>
-            <a href="/portfolio" className="hover:text-blue-600 font-medium">
+            {/* <a href="/portfolio" className="hover:text-blue-600 font-medium">
               Portfolio
-            </a>
-            <a href="/agency" className="hover:text-blue-600 font-medium">
+            </a> */}
+            {/* <a href="/agency" className="hover:text-blue-600 font-medium">
               Agency
-            </a>
+            </a> */}
             <a href="/membership" className="hover:text-blue-600 font-medium">
               Pricing
             </a>
             <a href="/contact" className="hover:text-blue-600 font-medium">
               Contact Us
             </a>
-            {!token ? (
+            {/* {!token ? (
               <a
                 href="/petoba-billing-landing"
                 className="hover:text-blue-600 font-medium"
               >
               Petoba Billing App
               </a>
-            ) : null}
+            ) : null} */}
+            
+          <div className="flex items-center gap-4"> 
             {token ? (
               <>
-              <a
+              {/* <a
                 href="/petoba-billing-landing"
                 className="hover:text-blue-600 font-medium"
               >
                Billing App
-              </a>
-                <a
+              </a> */}
+                {/* <a
                   href="/admin/dashboard"
                   className="hover:text-blue-600 font-medium"
                 >
                   Manage Orders 
-                </a>
+                </a> */}
                 <a
                   href="/dashboard"
                   className="hover:text-blue-600 font-medium"
@@ -146,8 +148,9 @@ const Header = () => {
                 Login →
               </a>
             )}
-          </nav>
+            </div>
 
+          </nav>
            
 
           {/* Hamburger Menu Button */}
@@ -180,9 +183,9 @@ const Header = () => {
       >
         <nav className="flex flex-col p-6 gap-4 text-black font-medium">
           <a href="/" onClick={closeMenu} className="hover:text-blue-600">Home</a>
-          <a href="/portfolio" onClick={closeMenu} className="hover:text-blue-600">Portfolio</a>
+          {/* <a href="/portfolio" onClick={closeMenu} className="hover:text-blue-600">Portfolio</a> */}
           <a href="/membership" onClick={closeMenu} className="hover:text-blue-600">Pricing</a>
-          <a href="/agency" onClick={closeMenu} className="hover:text-blue-600">Agency</a>
+          {/* <a href="/agency" onClick={closeMenu} className="hover:text-blue-600">Agency</a> */}
           <a href="/contact" onClick={closeMenu} className="hover:text-blue-600">Contact Us</a>
           {!token ? (
             <a href="/petoba-billing-landing" onClick={closeMenu} className="hover:text-blue-600">Petoba Billing App </a>
@@ -190,24 +193,24 @@ const Header = () => {
           )}
           {token ? (
               <>
-                <a
+                {/* <a
                   href="/admin/dashboard"
                   className="hover:text-blue-600 font-medium"
                 >
                   Manage Orders 
-                </a>
+                </a> */}
                 <a
                   href="/dashboard"
                   className="hover:text-blue-600 font-medium"
                 >
                   Dashboard 
                 </a>
-                <a
+                {/* <a
                   href="/petoba-billing"
                   className="hover:text-blue-600 font-medium"
                 >
                   Download Billing App 
-                </a>
+                </a> */}
                 <button
                   onClick={handleLogout}
                   className="px-5 py-2 rounded-full text-xl bg-gradient-to-r from-red-600 via-black to-orange-600 text-white font-semibold shadow-md hover:scale-105 transition-transform"

@@ -172,7 +172,7 @@ const QRCodeTemplates = ({ restaurantId, membership_level }) => {
           </div>
       </div>
         )}
-      {/* Premium dropdown */}
+      {/* Premium dropdown
       <div className="mb-4 text-left">
         <button
           className="w-full flex justify-between items-center px-4 py-3 text-lg font-semibold focus:outline-none border-b"
@@ -191,7 +191,7 @@ const QRCodeTemplates = ({ restaurantId, membership_level }) => {
             </div>
           </>
         )}
-      </div>
+      </div> */}
 
       {/* Pro dropdown */}
       <div className="mb-4 text-left">

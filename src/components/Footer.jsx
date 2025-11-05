@@ -12,13 +12,13 @@ const Footer = () => {
             {/* Logo + About */}
             <div>
               <img
-                src="https://petoba.avenirya.com/wp-content/uploads/2022/07/Untitled-design-6.png"
-                alt="Petoba Logo"
-                className="h-14 w-auto mb-4 mx-auto md:mx-0"
+                src="https://i.ibb.co/ZpM82T5p/Scroll-Menus-Logo-v1.png"
+                alt=" Logo"
+                className="h-16 w-auto mb-4 mx-auto md:mx-0"
               />
               <p className="text-gray-600 text-sm leading-relaxed">
-                Petoba KOT & Billing — a smart kitchen order ticket and billing solution by{" "}
-                <span className="font-semibold">Avenirya Solutions OPC Pvt Ltd</span>.
+                Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by{" "}
+                <span className="font-semibold">RR Digital Solutions</span>.
               </p>
             </div>
 
@@ -26,9 +26,9 @@ const Footer = () => {
             <div>
               <h3 className="font-semibold text-gray-800 mb-3 text-lg">Company</h3>
               <ul className="space-y-2 text-gray-600 text-sm">
-                <li>Avenirya Solutions OPC Pvt Ltd</li>
-                <li>109, Kohinoor Emerald</li>
-                <li>Sus - Pashan Road, Pune</li>
+                <li>RR Digital Solutions</li>
+                <li>Hyderabad, Telangana, </li>
+                <li>India</li>
               </ul>
             </div>
 
@@ -36,8 +36,8 @@ const Footer = () => {
             <div>
               <h3 className="font-semibold text-gray-800 mb-3 text-lg">Contact</h3>
               <ul className="space-y-2 text-gray-600 text-sm">
-                <li>📞 +91 9270361329</li>
-                <li>📧 admin@avenirya.com</li>
+                <li>📞 +91-9494678811</li>
+                <li>📧 admin@scrollsmenus.com</li>
               </ul>
             </div>
 
@@ -46,17 +46,18 @@ const Footer = () => {
               <h3 className="font-semibold text-gray-800 mb-3 text-lg">Quick Links</h3>
               <ul className="space-y-2 text-gray-600 text-sm">
                 <li><a href="/" className="hover:text-blue-600 transition">Home</a></li>
-                <li><a href="/features" className="hover:text-blue-600 transition">Features</a></li>
-                <li><a href="/agency" className="hover:text-blue-600 transition">Agency</a></li>
+                {/* <li><a href="/features" className="hover:text-blue-600 transition">Features</a></li> */}
+                {/* <li><a href="/agency" className="hover:text-blue-600 transition">Agency</a></li> */}
                 <li><a href="/membership" className="hover:text-blue-600 transition">Pricing</a></li>
                 <li><a href="/contact" className="hover:text-blue-600 transition">Contact</a></li>
+                <li><a href="/login" className="hover:text-blue-600 transition">Login</a></li>
               </ul>
             </div>
           </div>
           {/* Divider */}
           <div className="border-t border-gray-200 mt-8 pt-6 text-center">
             <p className="text-sm text-gray-500">
-              © 2025 Petoba KOT & Billing · Avenirya Solutions OPC Pvt Ltd · All rights reserved.
+              © 2025 Scroll Menus · RR Digital Solutions · All rights reserved.
             </p>
           </div>
         </div>

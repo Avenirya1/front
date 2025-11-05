@@ -39,7 +39,7 @@ function Dashboard() {
 
     const fetchRestaurant = async () => {
       try {
-        const res = await axios.get(`/api/admin/${restaurantId}/details`, {
+        const res = await axios.get(`https://scrollmenus.com/api/admin/${restaurantId}/details`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRestaurant(res.data);
@@ -53,7 +53,7 @@ function Dashboard() {
 
     const fetchMenu = async () => {
       try {
-        const res = await axios.get(`/api/admin/${restaurantId}/menu`, {
+        const res = await axios.get(`https://scrollmenus.com/api/admin/${restaurantId}/menu`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setExistingItems(res.data);
@@ -128,7 +128,7 @@ async function batchUpdate(items, batchSize = 5) {
     await Promise.all(
       batch.map(item =>
         axios.put(
-          `/api/admin/${item.restaurantId}/menu/${item._id}`,
+          `https://scrollmenus.com/api/admin/${item.restaurantId}/menu/${item._id}`,
           item,
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         )
@@ -229,7 +229,7 @@ const addItemToList = async () => {
 
   try {
     await axios.post(
-      `/api/admin/${restaurantId}/menu`,
+      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
       newItem,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -238,7 +238,7 @@ const addItemToList = async () => {
     setCustomCategory("");
     // Refresh the menu
     const res = await axios.get(
-      `/api/admin/${restaurantId}/menu`,
+      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setExistingItems(res.data);
@@ -276,7 +276,7 @@ const addItemToList = async () => {
       
       // Then send to your backend
       await axios.post(
-        `/api/admin/bulk`,
+        `https://scrollmenus.com/api/admin/bulk`,
         itemsWithImageUrls,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -286,7 +286,7 @@ const addItemToList = async () => {
       
       // Refresh the existing items
       const res = await axios.get(
-        `/api/admin/${restaurantId}/menu`,
+        `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setExistingItems(res.data);
@@ -301,7 +301,7 @@ const addItemToList = async () => {
    const handleUpgrade = async (newLevel) => {
     try {
       const res = await axios.put(
-        `/api/admin/upgrade-membership/${restaurantId}`,
+        `https://scrollmenus.com/api/admin/upgrade-membership/${restaurantId}`,
         { newLevel },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -552,7 +552,7 @@ const handleUpdate = async () => {
     };
 
     await axios.put(
-      `/api/admin/${restaurantId}/menu/${itemForm._id}`,
+      `https://scrollmenus.com/api/admin/${restaurantId}/menu/${itemForm._id}`,
       updatedItem,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -571,7 +571,7 @@ const handleUpdate = async () => {
     console.log("Update body:", updatedItem);
     // Refresh the menu
     const res = await axios.get(
-      `/api/admin/${restaurantId}/menu`,
+      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setExistingItems(res.data);
@@ -584,7 +584,7 @@ const handleUpdate = async () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/admin/${restaurantId}/menu/${id}`, {
+      await axios.delete(`https://scrollmenus.com/api/admin/${restaurantId}/menu/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setExistingItems(existingItems.filter(item => item._id !== id));
@@ -657,7 +657,7 @@ const handleUpdate = async () => {
       // Then save all items
       const requests = itemsToSave.map(item =>
         axios.put(
-          `/api/admin/${restaurantId}/menu/${item._id}`,
+          `https://scrollmenus.com/api/admin/${restaurantId}/menu/${item._id}`,
           item,
           { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -669,7 +669,7 @@ const handleUpdate = async () => {
       
       // Refresh the menu
       const res = await axios.get(
-        `/api/admin/${restaurantId}/menu`,
+        `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setExistingItems(res.data);
@@ -681,7 +681,7 @@ const handleUpdate = async () => {
   };
 
   const handleMenuClick = () => {
-    window.open(`https://app.avenirya.com/s/${restaurant.slug}`, "_blank");
+    window.open(`https://scrollmenus.com/s/${restaurant.slug}`, "_blank");
   };
 
 
@@ -693,10 +693,10 @@ const handleUpdate = async () => {
 return (
   <div className="p-6 max-w-7xl mx-auto space-y-8">
             <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions.</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions. Customers scan, order, and enjoy a contactless dining experience."
         />
 
         <link
@@ -1134,7 +1134,7 @@ return (
                         const updatedItem = { ...item, image: imageUrl };
 
                         await axios.put(
-                          `/api/admin/${restaurantId}/menu/${item._id}`,
+                          `https://scrollmenus.com/api/admin/${restaurantId}/menu/${item._id}`,
                           updatedItem,
                           { headers: { Authorization: `Bearer ${token}` } }
                         );
@@ -1344,7 +1344,7 @@ return (
       {/* Upload Button */}
       {restaurant.membership_level >= 2 ? (
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => handleOptionClick("/bulk-upload", true)}
           className="mt-5 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow hover:opacity-90 relative z-10"
         >
           Upload Menu
@@ -1429,7 +1429,7 @@ return (
   </div>
     {/* QR Section */}
     <QRCodeTemplates
-      restaurantId={restaurantId}
+      restaurantId={restaurant.slug}
       membership_level={restaurant.membership_level}
     />
 

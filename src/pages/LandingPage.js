@@ -382,7 +382,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
 
   const sendMessage = () => {
     if (!message.trim()) return;
-    const url = `https://wa.me/919270361329?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/919494678811?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
     setMessage("");
     setOpen(false);
@@ -390,10 +390,10 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
   return (
     <div className="relative">
             <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu,</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
         />
 
         <link
@@ -405,7 +405,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"
         />
-        <meta property="og:title" content="Petoba - Digital QR Menu" />
+        <meta property="og:title" content="Scroll Menus - Digital QR Menu" />
         <meta property="og:description" content="Turn your restaurant’s menu into a digital QR code menu." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yash.avenirya.com" />
@@ -440,7 +440,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
           <div className="md:w-1/2 flex justify-center md:justify-end md:flex">
             <img
               src="https://data.avenirya.com/wp-content/uploads/2025/10/Untitled-design-8.png"
-              alt="Digital Menu With QR Stand by Petoba QR"
+              alt="Digital Menu With QR Stand by Scroll Menus - Your Restaurant’s Menu, Just a Scan Away QR"
               className="w-86 md:w-96 drop-shadow-lg animate-float"
             />
           </div>
@@ -656,7 +656,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
 </section>
 
 
-<HomePagePortfolioSection />
+{/* <HomePagePortfolioSection /> */}
 
 <section className="relative py-16">
       <div className="max-w-6xl mx-auto px-6 text-center">
