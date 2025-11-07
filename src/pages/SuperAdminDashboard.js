@@ -27,7 +27,7 @@ const SuperAdminDashboard = () => {
   const [enteredPassword, setEnteredPassword] = useState("");
 
   // You can set your password in an environment variable or here
-  const SUPER_ADMIN_PASSWORD = "avenirya@123"; // 🔒 Change this
+  const SUPER_ADMIN_PASSWORD = "SuperAdmin#@5645"; // 🔒 Change this
 
   const [form, setForm] = useState(initialFormState);
   const [editingId, setEditingId] = useState(null);

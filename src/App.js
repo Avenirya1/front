@@ -93,7 +93,7 @@ function AppWrapper() {
         <Route path="/mymenu" element={<Loginpro />} />
         <Route path="/proedit" element={<Proedit />} />
         <Route path="/register" element={<RegisterFreePage />} />
-        <Route path="/yashkolnure" element={<SuperAdminDashboard />} />
+        <Route path="/superadmindashboard" element={<SuperAdminDashboard />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/agency" element={<AgencyPage />} />
         <Route path="*" element={<NotFound />} />
