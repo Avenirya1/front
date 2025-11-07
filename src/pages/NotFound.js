@@ -11,7 +11,7 @@ const NotFound = () => {
   const handleGoHome = () => navigate("/");
   const handleContactWhatsApp = () => {
     window.open(
-      "https://wa.me/919270361329?text=Hi, I landed on a missing page.",
+      "https://wa.me/919494678811?text=Hi, I landed on a missing page.",
       "_blank"
     );
   };
@@ -19,10 +19,10 @@ const NotFound = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
               <Helmet>
-        <title>Petoba | Digital QR Menu & Ordering</title>
+        <title>Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions.</title>
         <meta
           name="description"
-          content="Petoba lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
+          content="Scroll Menus lets restaurants create digital QR menus. Customers scan, order, and enjoy a contactless dining experience."
         />
 
         <link

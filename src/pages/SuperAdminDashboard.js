@@ -3,77 +3,95 @@ import axios from "axios";
 import { Edit, Trash, LogIn, BookOpen, Loader2, Upload, Plus } from "lucide-react";
 import { Toaster, toast } from "react-hot-toast";
 
+// Get logged-in agency ID from localStorage once
+const agencyId = localStorage.getItem("agencyId");
+
+// Define a constant for the initial form state
+const initialFormState = {
+  name: "",
+  email: "",
+  address: "",
+  logo: "",
+  contact: "",
+  password: "",
+  subadmin_id: agencyId || "", // Default to the logged-in agency (if any)
+  membership_level: "",
+  currency: "INR",
+  homeImage: "",
+  active: true,
+};
+
 const SuperAdminDashboard = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    address: "",
-    logo: "",
-    contact: "",
-    password: "",
-    subadmin_id: "",
-    membership_level: "",
-    currency: "INR", // 🆕 Default to INR
-    homeImage: "",  
-    active: true,
-  });
+  const [authenticated, setAuthenticated] = useState(false);
+  const [enteredPassword, setEnteredPassword] = useState("");
+
+  // You can set your password in an environment variable or here
+  const SUPER_ADMIN_PASSWORD = "avenirya@123"; // 🔒 Change this
+
+  const [form, setForm] = useState(initialFormState);
   const [editingId, setEditingId] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(null);
+  const [uploadingHome, setUploadingHome] = useState(false);
+  const [loading, setLoading] = useState(false); // For fetching restaurant list
+  const [submitting, setSubmitting] = useState(false); // For form submission
   const [formOpen, setFormOpen] = useState(false);
   const formRef = useRef(null);
-  const agencyLevel = parseInt(localStorage.getItem("agencyLevel") || "1", 10);
-  const limits = {
-    1: 10,   // Level 1 agency → max 10 restaurants
-    2: 25,   // Level 2 agency → max 25 restaurants
-    3: 2000,  // Level 3 agency → max 50 restaurants
-  };
 
   const API = "/api/admin";
   const WP_USERNAME = "yashkolnure58@gmail.com";
   const WP_APP_PASSWORD = "05mq iTLF UvJU dyaz 7KxQ 8pyc";
   const WP_SITE_URL = "https://website.avenirya.com";
 
-const currencies = [
-  { code: "INR", name: "Indian Rupee", symbol: "₹" },
-  { code: "USD", name: "US Dollar", symbol: "$" },
-  { code: "EUR", name: "Euro", symbol: "€" },
-  { code: "GBP", name: "British Pound", symbol: "£" },
-  { code: "AED", name: "UAE Dirham", symbol: "د.إ" },
-  { code: "AUD", name: "Australian Dollar", symbol: "A$" },
-  { code: "CAD", name: "Canadian Dollar", symbol: "CA$" },
-  { code: "SGD", name: "Singapore Dollar", symbol: "S$" },
-  { code: "JPY", name: "Japanese Yen", symbol: "¥" },
-  { code: "CNY", name: "Chinese Yuan", symbol: "¥" },
-];
+  const currencies = [
+    { code: "INR", name: "Indian Rupee", symbol: "₹" },
+    { code: "USD", name: "US Dollar", symbol: "$" },
+    { code: "EUR", name: "Euro", symbol: "€" },
+    { code: "GBP", name: "British Pound", symbol: "£" },
+    { code: "AED", name: "UAE Dirham", symbol: "د.إ" },
+    { code: "AUD", name: "Australian Dollar", symbol: "A$" },
+    { code: "CAD", name: "Canadian Dollar", symbol: "CA$" },
+    { code: "SGD", name: "Singapore Dollar", symbol: "S$" },
+    { code: "JPY", name: "Japanese Yen", symbol: "¥" },
+    { code: "CNY", name: "Chinese Yuan", symbol: "¥" },
+  ];
 
-  const [uploadingHome, setUploadingHome] = useState(false);
+  // Check for password auth on component mount
+  useEffect(() => {
+    if (localStorage.getItem("superAdminAuth") === "true") {
+      setAuthenticated(true);
+    }
+  }, []);
 
-const uploadHomeImageToWordPress = async (file) => {
-  const formDataImage = new FormData();
-  formDataImage.append("file", file);
-  setUploadingHome(true);
+  // Fetch all restaurants once authenticated
+  useEffect(() => {
+    if (authenticated) {
+      fetchRestaurants();
+    }
+  }, [authenticated]);
 
-  try {
-    const response = await axios.post(`${WP_SITE_URL}/wp-json/wp/v2/media`, formDataImage, {
-      headers: {
-        Authorization: "Basic " + btoa(`${WP_USERNAME}:${WP_APP_PASSWORD}`),
-        "Content-Disposition": `attachment; filename="${file.name}"`,
-      },
-    });
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (enteredPassword === SUPER_ADMIN_PASSWORD) {
+      localStorage.setItem("superAdminAuth", "true");
+      setAuthenticated(true);
+    } else {
+      toast.error("Incorrect password!");
+    }
+  };
 
-    const imageUrl = response.data.source_url;
-    setForm((prev) => ({ ...prev, homeImage: imageUrl }));
-    toast.success("Home image uploaded successfully!");
-  } catch (err) {
-    console.error(err);
-    toast.error("Failed to upload home image to WordPress");
-  } finally {
-    setUploadingHome(false);
-  }
-};
-  // Get logged-in agency ID from localStorage
+  const fetchRestaurants = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API}/restaurants`);
+      setRestaurants(res.data);
+    } catch (err) {
+      toast.error("Failed to fetch restaurants");
+    } finally {
+      setLoading(false);
+    }
+  };
   const agencyId = localStorage.getItem("agencyId");
 
   useEffect(() => {
@@ -95,10 +113,18 @@ const uploadHomeImageToWordPress = async (file) => {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  // Function to handle closing the form and resetting state
+  const handleCloseForm = () => {
+    setFormOpen(false);
+    setEditingId(null);
+    setForm(initialFormState); // Reset form to initial state
+  };
+
   const handleSubmit = async () => {
+    setSubmitting(true); // Use submission state
     try {
       const payload = { ...form, membership_level: 3 };
-      if (!payload.password) delete payload.password; // Only send password if entered
+      if (!payload.password) delete payload.password;
 
       if (editingId) {
         await axios.put(`${API}/restaurants/${editingId}`, payload);
@@ -108,22 +134,12 @@ const uploadHomeImageToWordPress = async (file) => {
         toast.success("Restaurant created successfully!");
       }
 
-      setForm({
-        name: "",
-        email: "",
-        address: "",
-        logo: "",
-        contact: "",
-        password: "",
-        currency: "INR", // 🆕 Default to INR
-        subadmin_id: agencyId,
-        membership_level: "",
-      });
-      setEditingId(null);
-      setFormOpen(false);
-      fetchRestaurantsByAgency(agencyId);
+      handleCloseForm(); // Use the close/reset function
+      fetchRestaurants(); // Refetch all restaurants
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to save restaurant");
+    } finally {
+      setSubmitting(false); // Stop submission state
     }
   };
 
@@ -136,10 +152,10 @@ const uploadHomeImageToWordPress = async (file) => {
       logo: restaurant.logo || "",
       contact: restaurant.contact || "",
       password: "",
-      subadmin_id: restaurant.subadmin_id || agencyId,
-      homeImage: restaurant.homeImage || "", // <-- add this
-      active: typeof restaurant.active === "boolean" ? restaurant.active : true, // <-- add this
-      currency: restaurant.currency || "INR", // 🆕 Add currency field
+      subadmin_id: restaurant.subadmin_id || agencyId || "",
+      homeImage: restaurant.homeImage || "",
+      active: typeof restaurant.active === "boolean" ? restaurant.active : true,
+      currency: restaurant.currency || "INR",
     });
     setFormOpen(true);
   };
@@ -149,7 +165,7 @@ const uploadHomeImageToWordPress = async (file) => {
       try {
         await axios.delete(`${API}/restaurants/${id}`);
         toast.success("Restaurant deleted successfully");
-        fetchRestaurantsByAgency(agencyId);
+        fetchRestaurants(); // Refetch all restaurants
       } catch (err) {
         toast.error("Failed to delete restaurant");
       }
@@ -160,7 +176,7 @@ const uploadHomeImageToWordPress = async (file) => {
     try {
       const agencyToken = localStorage.getItem("agencyToken");
       if (!agencyToken) {
-        toast.error("This Page is Not For You....!");
+        toast.error("Agency token not found. Cannot impersonate.");
         return;
       }
 
@@ -174,14 +190,40 @@ const uploadHomeImageToWordPress = async (file) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("restaurantId", data.restaurant._id);
       localStorage.setItem("impersonatedBy", "agency");
-      window.location.href = "/dashboard"; // Redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to login as restaurant");
     }
   };
 
+  const uploadHomeImageToWordPress = async (file) => {
+    if (!file) return;
+    const formDataImage = new FormData();
+    formDataImage.append("file", file);
+    setUploadingHome(true);
+
+    try {
+      const response = await axios.post(`${WP_SITE_URL}/wp-json/wp/v2/media`, formDataImage, {
+        headers: {
+          Authorization: "Basic " + btoa(`${WP_USERNAME}:${WP_APP_PASSWORD}`),
+          "Content-Disposition": `attachment; filename="${file.name}"`,
+        },
+      });
+
+      const imageUrl = response.data.source_url;
+      setForm((prev) => ({ ...prev, homeImage: imageUrl }));
+      toast.success("Home image uploaded successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to upload home image to WordPress");
+    } finally {
+      setUploadingHome(false);
+    }
+  };
+
   const uploadImageToWordPress = async (file) => {
+    if (!file) return;
     const formDataImage = new FormData();
     formDataImage.append("file", file);
     setUploading(true);
@@ -205,15 +247,36 @@ const uploadHomeImageToWordPress = async (file) => {
     }
   };
 
-  if (!agencyId)
+  // 🔐 If not authenticated, show password screen
+  if (!authenticated) {
     return (
-      <p className="text-center text-red-600 mt-10">
-        ⚠ You must be logged in as an agency.
-      </p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <Toaster position="top-right" />
+        <form
+          onSubmit={handlePasswordSubmit}
+          className="bg-white p-8 rounded-xl shadow-md w-80 text-center"
+        >
+          <h2 className="text-2xl font-semibold mb-4">Super Admin Access</h2>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={enteredPassword}
+            onChange={(e) => setEnteredPassword(e.target.value)}
+            className="w-full p-3 border rounded-lg focus:ring focus:ring-blue-300 mb-4"
+          />
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     );
+  }
 
   return (
-    <div className="relative min-h-screen  ">
+    <div className="relative min-h-screen">
       {/* Background gradients */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full filter blur-3xl opacity-30"></div>
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-3xl opacity-20"></div>
@@ -224,10 +287,7 @@ const uploadHomeImageToWordPress = async (file) => {
         {/* Button to open form */}
         <button
           onClick={() => {
-            if (restaurants.length >= (limits[agencyLevel] || 0)) {
-              toast.error(`Your agency level allows only ${limits[agencyLevel]} restaurants`);
-              return;
-            }
+            // REMOVED agency level check. Super admin has no limits.
             setFormOpen(true);
           }}
           className="mb-6 flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700"
@@ -238,9 +298,12 @@ const uploadHomeImageToWordPress = async (file) => {
         {/* Popup form */}
         {formOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 rounded-2xl shadow relative">
+            <div
+              ref={formRef}
+              className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 rounded-2xl shadow relative"
+            >
               <button
-                onClick={() => setFormOpen(false)}
+                onClick={handleCloseForm} // Use the state-resets ting close function
                 className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
               >
                 ✕
@@ -255,6 +318,12 @@ const uploadHomeImageToWordPress = async (file) => {
                 <input name="address" placeholder="Address" value={form.address} onChange={handleChange} className="p-3 border rounded-lg focus:ring focus:ring-blue-300" />
                 <input type="number" name="contact" placeholder="Contact Number" value={form.contact} onChange={handleChange} className="p-3 border rounded-lg focus:ring focus:ring-blue-300" />
                 <input name="password" type="password" placeholder={editingId ? "Change Password (optional)" : "Password"} value={form.password} onChange={handleChange} className="p-3 border rounded-lg focus:ring focus:ring-blue-300" />
+                
+                {/* TODO: As a super admin, you probably want a dropdown to *select* the subadmin_id
+                    For now, it defaults to the logged-in agency's ID per the initial state.
+                <input name="subadmin_id" placeholder="Agency ID" value={form.subadmin_id} onChange={handleChange} className="p-3 border rounded-lg" />
+                */}
+                
                 <div className="md:col-span-2 mt-4">
                   <label className="block mb-2 text-sm font-medium text-gray-600">
                     Upload Home Image
@@ -312,9 +381,9 @@ const uploadHomeImageToWordPress = async (file) => {
               <button
                 onClick={handleSubmit}
                 className="mt-6 w-full px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 flex items-center justify-center gap-2"
-                disabled={uploading || loading}
+                disabled={uploading || uploadingHome || submitting} // Check submitting state
               >
-                {loading ? <Loader2 className="animate-spin" size={18}/> : editingId ? "Update" : "Create"} Restaurant
+                {submitting ? <Loader2 className="animate-spin" size={18}/> : editingId ? "Update" : "Create"} Restaurant
               </button>
             </div>
           </div>
@@ -348,28 +417,112 @@ const uploadHomeImageToWordPress = async (file) => {
                       <td className="p-3 border">{rest.name}</td>
                       <td className="p-3 border">{rest.contact || "-"}</td>
                       <td className="p-3 border text-center">
-                        <button
-                          onClick={async () => {
-                            const confirmMsg = rest.active
-                              ? `Are you sure you want to deactivate "${rest.name}"?`
-                              : `Are you sure you want to activate "${rest.name}"?`;
-                            if (!window.confirm(confirmMsg)) return;
-                            try {
-                              await axios.put(`${API}/restaurants/${rest._id}`, { active: !rest.active });
-                              toast.success(`Restaurant ${rest.active ? "deactivated" : "activated"}!`);
-                              fetchRestaurantsByAgency(agencyId);
-                            } catch (err) {
-                              toast.error("Failed to update status");
-                            }
-                          }}
-                          className={`px-3 py-1 rounded-full font-semibold text-xs ${
-                            rest.active
-                              ? "bg-green-100 text-green-700 border border-green-300"
-                              : "bg-gray-200 text-gray-600 border border-gray-300"
-                          }`}
-                        >
-                          {rest.active ? "Active" : "Inactive"}
-                        </button>
+                       <div className="relative inline-block">
+                         <button
+                           onClick={async () => {
+                             if (rest.active) {
+                               const confirmMsg = `Are you sure you want to deactivate "${rest.name}"?`;
+                               if (!window.confirm(confirmMsg)) return;
+                       
+                               try {
+                                 await axios.put(`${API}/restaurants/${rest._id}`, {
+                                   active: false,
+                                   expiresAt: null,
+                                 });
+                                 toast.success(`Restaurant deactivated!`);
+                                 fetchRestaurantsByAgency(agencyId);
+                               } catch {
+                                 toast.error("Failed to deactivate");
+                               }
+                             } else {
+                               // Toggle dropdown visibility
+                               setShowDropdown((prev) => (prev === rest._id ? null : rest._id));
+                             }
+                           }}
+                           className={`px-3 py-1 rounded-full font-semibold text-xs ${
+                             rest.active
+                               ? "bg-green-100 text-green-700 border border-green-300"
+                               : "bg-gray-200 text-gray-600 border border-gray-300 hover:bg-gray-300"
+                           }`}
+                         >
+                           {rest.active ? "Active" : "Inactive"}
+                         </button>
+                       
+                         {/* dropdown menu for duration */}
+                         {showDropdown === rest._id && !rest.active && (
+                           <div className="absolute right-0 w-40 mt-2 bg-white border border-gray-200 rounded-lg shadow-md text-sm z-10">
+                             <p className="px-3 py-2 text-gray-700 font-semibold border-b">Select Duration</p>
+                             {[
+                               { label: "7 Days", value: "7d" },
+                               { label: "1 Month", value: "1m" },
+                               { label: "2 Months", value: "2m" },
+                               { label: "6 Months", value: "6m" },
+                               { label: "1 Year", value: "1y" },
+                               { label: "Lifetime", value: "5y" },
+                             ].map((opt) => (
+                               <button
+                                 key={opt.value}
+                                 onClick={async () => {
+                                   setShowDropdown(null);
+                                   const now = new Date();
+                                   if (opt.value === "7d") now.setDate(now.getDate() + 7);
+                                   else if (opt.value === "1m") now.setMonth(now.getMonth() + 1);
+                                   else if (opt.value === "2m") now.setMonth(now.getMonth() + 2);
+                                   else if (opt.value === "6m") now.setMonth(now.getMonth() + 6);
+                                   else if (opt.value === "1y") now.setFullYear(now.getFullYear() + 1);
+                                   else if (opt.value === "5y") now.setFullYear(now.getFullYear() + 5);
+                       
+                                   const expiresAt = now;
+                                   try {
+                                     await axios.put(`${API}/restaurants/${rest._id}`, {
+                                       active: true,
+                                       expiresAt,
+                                     });
+                                     toast.success(`"${rest.name}" activated for ${opt.label}!`);
+                                     fetchRestaurantsByAgency(agencyId);
+                                   } catch {
+                                     toast.error("Failed to activate");
+                                   }
+                                 }}
+                                 className="block w-full text-left px-3 py-2 hover:bg-gray-100"
+                               >
+                                 {opt.label}
+                               </button>
+                             ))}
+                           </div>
+                         )}
+                       </div>
+                                               
+                       {rest.expiresAt && (() => {
+                         const now = new Date();
+                         const expiry = new Date(rest.expiresAt);
+                         const diffMs = expiry - now;
+                       
+                         if (diffMs <= 0) {
+                           return <span className="text-xs text-gray-500"><br />Expired</span>;
+                         }
+                       
+                         const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                         const diffMonths = Math.floor(diffDays / 30);
+                         const diffYears = Math.floor(diffDays / 365);
+                       
+                         let timeLeft = "";
+                       
+                         if (diffYears >= 1) {
+                           timeLeft = `${diffYears}y left`;
+                         } else if (diffMonths >= 1) {
+                           timeLeft = `${diffMonths}m left`;
+                         } else {
+                           timeLeft = `${diffDays}d left`;
+                         }
+                       
+                         return (
+                           <span className="text-xs text-gray-500">
+                             <br />
+                             {timeLeft}
+                           </span>
+                         );
+                       })()}
                       </td>
                       <td className="p-3 border text-center">
                         <div className="flex justify-center gap-3">
@@ -388,7 +541,7 @@ const uploadHomeImageToWordPress = async (file) => {
                           </button>
 
                           <a
-                            href={`/s/${rest.slug}`}
+                            href={`/s/${rest.slug}`} // Assumes 'slug' is part of the 'rest' object
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-green-600 hover:text-green-800"

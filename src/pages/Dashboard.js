@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UpgradePopup from "../components/UpgradePopup";
 import QRCodeTemplates from "../components/QRCodeTemplates";
+import AdminSettings from "../components/AdminSettings";
 import CustomFields from "../components/CustomFields";
 import OfferBannerManager from "../components/OfferBannerManager";
 import { Helmet } from "react-helmet";
@@ -39,7 +40,7 @@ function Dashboard() {
 
     const fetchRestaurant = async () => {
       try {
-        const res = await axios.get(`https://scrollmenus.com/api/admin/${restaurantId}/details`, {
+        const res = await axios.get(`/api/admin/${restaurantId}/details`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRestaurant(res.data);
@@ -53,7 +54,7 @@ function Dashboard() {
 
     const fetchMenu = async () => {
       try {
-        const res = await axios.get(`https://scrollmenus.com/api/admin/${restaurantId}/menu`, {
+        const res = await axios.get(`/api/admin/${restaurantId}/menu`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setExistingItems(res.data);
@@ -128,7 +129,7 @@ async function batchUpdate(items, batchSize = 5) {
     await Promise.all(
       batch.map(item =>
         axios.put(
-          `https://scrollmenus.com/api/admin/${item.restaurantId}/menu/${item._id}`,
+          `/api/admin/${item.restaurantId}/menu/${item._id}`,
           item,
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         )
@@ -229,7 +230,7 @@ const addItemToList = async () => {
 
   try {
     await axios.post(
-      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
+      `/api/admin/${restaurantId}/menu`,
       newItem,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -238,7 +239,7 @@ const addItemToList = async () => {
     setCustomCategory("");
     // Refresh the menu
     const res = await axios.get(
-      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
+      `/api/admin/${restaurantId}/menu`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setExistingItems(res.data);
@@ -276,7 +277,7 @@ const addItemToList = async () => {
       
       // Then send to your backend
       await axios.post(
-        `https://scrollmenus.com/api/admin/bulk`,
+        `/api/admin/bulk`,
         itemsWithImageUrls,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -286,7 +287,7 @@ const addItemToList = async () => {
       
       // Refresh the existing items
       const res = await axios.get(
-        `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
+        `/api/admin/${restaurantId}/menu`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setExistingItems(res.data);
@@ -301,7 +302,7 @@ const addItemToList = async () => {
    const handleUpgrade = async (newLevel) => {
     try {
       const res = await axios.put(
-        `https://scrollmenus.com/api/admin/upgrade-membership/${restaurantId}`,
+        `/api/admin/upgrade-membership/${restaurantId}`,
         { newLevel },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -552,7 +553,7 @@ const handleUpdate = async () => {
     };
 
     await axios.put(
-      `https://scrollmenus.com/api/admin/${restaurantId}/menu/${itemForm._id}`,
+      `/api/admin/${restaurantId}/menu/${itemForm._id}`,
       updatedItem,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -571,7 +572,7 @@ const handleUpdate = async () => {
     console.log("Update body:", updatedItem);
     // Refresh the menu
     const res = await axios.get(
-      `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
+      `/api/admin/${restaurantId}/menu`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setExistingItems(res.data);
@@ -584,7 +585,7 @@ const handleUpdate = async () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://scrollmenus.com/api/admin/${restaurantId}/menu/${id}`, {
+      await axios.delete(`/api/admin/${restaurantId}/menu/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setExistingItems(existingItems.filter(item => item._id !== id));
@@ -657,7 +658,7 @@ const handleUpdate = async () => {
       // Then save all items
       const requests = itemsToSave.map(item =>
         axios.put(
-          `https://scrollmenus.com/api/admin/${restaurantId}/menu/${item._id}`,
+          `/api/admin/${restaurantId}/menu/${item._id}`,
           item,
           { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -669,7 +670,7 @@ const handleUpdate = async () => {
       
       // Refresh the menu
       const res = await axios.get(
-        `https://scrollmenus.com/api/admin/${restaurantId}/menu`,
+        `/api/admin/${restaurantId}/menu`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setExistingItems(res.data);
@@ -1134,7 +1135,7 @@ return (
                         const updatedItem = { ...item, image: imageUrl };
 
                         await axios.put(
-                          `https://scrollmenus.com/api/admin/${restaurantId}/menu/${item._id}`,
+                          `/api/admin/${restaurantId}/menu/${item._id}`,
                           updatedItem,
                           { headers: { Authorization: `Bearer ${token}` } }
                         );
@@ -1406,6 +1407,7 @@ return (
 </div>
 
 
+<div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6"> 
      {/* Left Column - Offer Banner Manager */}
   <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[220px]">
     <div className="absolute -top-20 -right-20 w-72 h-72 bg-gradient-to-r from-purple-300 to-blue-300 rounded-full blur-3xl opacity-20 transform rotate-45"></div>
@@ -1427,7 +1429,32 @@ return (
       </p>
     )}
   </div>
-    {/* QR Section */}
+{/* Left Column - Restaurant Admin Settings */}
+<div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[220px]">
+  <div className="absolute -top-20 -right-20 w-72 h-72 bg-gradient-to-r from-purple-300 to-blue-300 rounded-full blur-3xl opacity-20 transform rotate-45"></div>
+
+  <h2 className="text-2xl font-semibold text-gray-800 relative z-10">
+    Manage Restaurant Settings
+  </h2>
+
+  <p className="text-gray-600 mt-2 max-w-sm relative z-10">
+    Edit your restaurant name, logo, WhatsApp, and password in one place
+  </p>
+
+  {restaurant.membership_level === 3 ? (
+    <AdminSettings />
+  ) : (
+    <p className="mt-5 text-gray-500 italic relative z-10">
+      ⚠ Upgrade to <span className="font-semibold text-purple-600">Pro</span>{" "}
+      to unlock full management access.
+    </p>
+  )}
+</div>
+
+
+  </div>
+
+   {/* QR Section */}
     <QRCodeTemplates
       restaurantId={restaurant.slug}
       membership_level={restaurant.membership_level}

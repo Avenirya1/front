@@ -166,7 +166,7 @@ Telangana, India
                   <FaEnvelope size={20} />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-gray-700">admin@scrollsmenus.com</p>
+                  <p className="text-gray-700">admin@scrollmenus.com</p>
                 </div>
             </div>
           </div>
