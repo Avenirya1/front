@@ -124,7 +124,7 @@ const Kolnure = () => {
           <button
             className="w-full py-2 bg-blue-600 text-white rounded"
             onClick={() => {
-              if (accessInput === "Yash$5828") {
+              if (accessInput === "SuperAdmin#@5645") {
                 setAccessGranted(true);
               } else {
                 alert("❌ Wrong Password");
