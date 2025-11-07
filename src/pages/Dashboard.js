@@ -700,11 +700,6 @@ return (
           content="Scroll Menus - Your Restaurant’s Menu, Just a Scan Away. solution by RR Digital Solutions. Customers scan, order, and enjoy a contactless dining experience."
         />
 
-        <link
-          rel="icon"
-          href="https://petoba.avenirya.com/wp-content/uploads/2025/09/download-1.png"
-          type="image/png"
-        />
         <meta
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"

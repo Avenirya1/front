@@ -15,11 +15,6 @@ function BillingApp() {
           name="description"
           content="Manage restaurant orders, print KOTs, and generate invoices seamlessly using the Petoba Billing App. Simple, fast, and reliable billing for your restaurant."
         />
-        <link
-          rel="icon"
-          href="https://petoba.avenirya.com/wp-content/uploads/2025/09/download-1.png"
-          type="image/png"
-        />
         <meta
           property="og:image"
           content="https://petoba.avenirya.com/wp-content/uploads/2025/09/Untitled-design-6.png"
