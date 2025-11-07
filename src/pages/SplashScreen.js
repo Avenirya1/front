@@ -118,14 +118,14 @@ const SplashScreen = () => {
           <img
             src={restaurant.logo}
             alt="Restaurant Logo"
-            className="w-28 h-28 object-cover rounded-full border-4 border-yellow-400 mx-auto mb-5 shadow-lg"
+            className="w-28 h-28 object-cover rounded-full border-4 border-orange-400 mx-auto mb-5 shadow-lg"
           />
         )}
 
         <h1 className="text-4xl font-bold mb-2">{restaurant.name}</h1>
 
         {restaurant.address && (
-          <p className="text-yellow-400 text-lg mb-3">{restaurant.address}</p>
+          <p className="text-orange-400 text-lg mb-3">{restaurant.address}</p>
         )}
 
         {restaurant.contact && (
@@ -138,7 +138,7 @@ const SplashScreen = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <div className="w-10 h-10 border-4 border-t-transparent border-yellow-400 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-t-transparent border-orange-400 rounded-full animate-spin"></div>
         </motion.div>
 
         <p className="mt-4 text-gray-300 text-sm">Redirecting to menu...</p>
