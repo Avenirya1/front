@@ -31,6 +31,7 @@ function MenuCard({
   decreaseQty,
   currency , // default to INR
   conversionRate = 1, // conversion rate to multiply price (e.g. 0.012 for USD)
+  enableOrdering ,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -57,21 +58,25 @@ function MenuCard({
   };
 
   const renderCartControls = (isPopup = false) => {
-    if (quantity === 0) {
-      return (
-        <button
-          onClick={(e) => handleStopProp(e, addToCart)}
-          className={
-            isPopup
-              ? "flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2 rounded-full transition w-full"
-              : "flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1.5 rounded-xl transition"
-          }
-        >
-          <FaPlus className={isPopup ? "text-sm" : "text-xs"} />
-          {isPopup ? "Add to Cart" : "Add"}
-        </button>
-      );
-    }
+  if (quantity === 0) {
+    return (
+      <>
+        {enableOrdering === "enabled" && (
+          <button
+            onClick={(e) => handleStopProp(e, addToCart)}
+            className={
+              isPopup
+                ? "flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2 rounded-full transition w-full"
+                : "flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1.5 rounded-xl transition"
+            }
+          >
+            <FaPlus className={isPopup ? "text-sm" : "text-xs"} />
+            {isPopup ? "Add to Cart" : "Add"}
+          </button>
+        )}
+      </>
+    );
+  }
 
     return (
       <div
