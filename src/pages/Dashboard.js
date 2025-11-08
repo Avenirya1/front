@@ -682,7 +682,7 @@ const handleUpdate = async () => {
   };
 
   const handleMenuClick = () => {
-    window.open(`https://scrollmenus.com/s/${restaurant.slug}`, "_blank");
+    window.open(`https://scrollmenus.com/m/${restaurant.slug}`, "_blank");
   };
 
 

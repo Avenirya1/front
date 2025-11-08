@@ -541,7 +541,7 @@ const SuperAdminDashboard = () => {
                           </button>
 
                           <a
-                            href={`/s/${rest.slug}`} // Assumes 'slug' is part of the 'rest' object
+                            href={`/m/${rest.slug}`} // Assumes 'slug' is part of the 'rest' object
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-green-600 hover:text-green-800"

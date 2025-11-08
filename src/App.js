@@ -56,7 +56,7 @@ function AppWrapper() {
     "/demo/:id",
     "/shop/:id",
     "/restaurant/:id",
-    "/s/:id",
+    "/m/:id",
   ];
 
   // Check current route
@@ -69,12 +69,12 @@ function AppWrapper() {
     <>
       {!hideHeaderFooter && <Header />}
       <Routes>
-        <Route path="/menu/:id" element={<MenuPageWithoutCart />} />
+        <Route path="/menuwp/:id" element={<MenuPageWithoutCart />} />
         <Route path="/cloudkitchen/:id" element={<MenuPageWithoutCartCloud />} />
-        <Route path="/menuwp/:id" element={<RestaurantMenuPagewp />} />
+        <Route path="/menu/:id" element={<RestaurantMenuPagewp />} />
         <Route path="/demo/:id" element={<RestaurantMenuPageDemo />} />
         <Route path="/shop/:id" element={<Beautysalon />} />
-        <Route path="/s/:id" element={<SplashScreen />} />
+        <Route path="/m/:id" element={<SplashScreen />} />
         <Route path="/doredirect" element={<RedirectManagerPage />} />
         <Route path="/restaurant/:id" element={<RestaurantMenuPage />} />
         <Route path="/dsbrdadmin1" element={<Dsbrdadmin1 />} />

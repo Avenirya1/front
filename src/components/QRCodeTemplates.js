@@ -5,7 +5,7 @@ import { QRCodeCanvas } from "qrcode.react";
 const QRCodeTemplates = ({ restaurantId, membership_level }) => {
   // Dynamic links
   const basicLink = `https://app.avenirya.com/menu/${restaurantId}`;
-  const wpLink = `https://scrollmenus.com/s/${restaurantId}`;
+  const wpLink = `https://scrollmenus.com/m/${restaurantId}`;
 
   const [openFree, setOpenFree] = useState(true);
   const [openPremium, setOpenPremium] = useState(false);

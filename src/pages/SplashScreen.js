@@ -52,7 +52,7 @@ const SplashScreen = () => {
 
         // Redirect to menu page after 2.5s
         setTimeout(() => {
-          navigate(`/menuwp/${data.slug}`);
+          navigate(`/menu/${data.slug}`);
         }, 3500);
       } catch (err) {
         console.error("Error fetching restaurant details:", err);
