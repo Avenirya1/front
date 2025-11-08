@@ -80,7 +80,7 @@ const Header = () => {
           <div className="flex items-center gap-2">
             <a href="/">
             <img
-              src="https://i.ibb.co/ZpM82T5p/Scroll-Menus-Logo-v1.png"
+              src="https://website.avenirya.com/wp-content/uploads/2025/11/ScrollMenus_-Logo_v1-2.png"
               alt="Logo"
               className="h-20 w-auto"
             /></a>
